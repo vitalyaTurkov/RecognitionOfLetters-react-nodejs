@@ -1,0 +1,1 @@
+export const CHANGE_WORD_ACTION = "CHANGE_WORD_ACTION";

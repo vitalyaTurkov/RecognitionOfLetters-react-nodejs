@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+}
+
+h1 {
+    font-size: 24px;
+    color: #CDE;
+    font-family: 'K2D', sans-serif;
+}
+
+.header {
+    margin-top: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+
+.canvas-wrap {
+    padding: 20px;
+    background: #aab;
+    border: 1px solid darkred;
+}

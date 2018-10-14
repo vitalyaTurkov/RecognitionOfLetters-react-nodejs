@@ -1,0 +1,18 @@
+canvas {
+    border: 1px solid darkred;
+}
+
+button {
+    border: none;
+    padding: 10px;
+    background: #079;
+}
+
+.btnGroup {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.clearBtn {
+    margin-left: 10px;
+}
