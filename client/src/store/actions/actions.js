@@ -11,6 +11,6 @@ export const changeWord = (word) => {
 export const changeWordAsync = (canvas) => {
     return dispatch => {
         sendImage(canvas)
-            .then(data => dispatch(changeWord(data)))
+            .then(res => dispatch(changeWord(res.data)))
     }
 };
