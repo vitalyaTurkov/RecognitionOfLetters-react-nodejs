@@ -1,10 +1,14 @@
 import React from 'react'
-import MyCanvas from '../canvas'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { changeWord, changeWordAsync } from '../../store/actions/actions'
 import PropTypes from 'prop-types'
+
+import MyCanvas from '../canvas'
+import { changeWordAsync, changeWord } from '../../store/actions/actions'
+
 import './main.css'
+import Card from '@material-ui/core/Card'
+import Typography from '@material-ui/core/Typography'
 
 class Application extends React.Component {
 
@@ -13,27 +17,28 @@ class Application extends React.Component {
     };
 
     render() {
-        let header = '';
+        let header;
         if(!(this.props.word === '')) {
             header = `Это буква ${this.props.word}`;
         }
         else {
-            header = 'Привет!';
+            header = 'Нарисуйте букву ^-^';
         }
-
         return (
             <div className="header">
-                <div className="canvas-wrap">
-                    <h1 className="figureName">{ header }</h1>
-                    <MyCanvas sendImage={ this.sendImage }/>
-                </div>
+                <Card className="canvas-wrap">
+                    <Typography variant="h5" component="h3">
+                        { header }
+                    </Typography>
+                    <MyCanvas changeWord={this.props.changeWord} sendImage={ this.sendImage }/>
+                </Card>
             </div>
         )
     }
 
     //Отправка холста канвас на сервер
     sendImage = (canvas) => {
-        this.props.changeWord(canvas);
+        this.props.changeWordAsync(canvas);
     };
 
 }
@@ -46,7 +51,8 @@ const mapStateToProps = state => {
 
 const mapActionsToProps = dispatch => {
     return {
-        changeWord: bindActionCreators(changeWordAsync, dispatch)
+        changeWordAsync: bindActionCreators(changeWordAsync, dispatch),
+        changeWord: bindActionCreators(changeWord, dispatch)
     };
 };
 

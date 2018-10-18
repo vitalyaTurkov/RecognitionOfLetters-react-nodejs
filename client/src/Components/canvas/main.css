@@ -1,18 +1,13 @@
 canvas {
     border: 1px solid darkred;
+    margin-top: 20px;
 }
 
-button {
-    border: none;
-    padding: 10px;
-    background: #079;
-}
-
-.btnGroup {
-    margin-bottom: 10px;
+.canvasForm {
     margin-top: 10px;
 }
 
-.clearBtn {
+.btn-wrap {
+    display: inline-block;
     margin-left: 10px;
 }

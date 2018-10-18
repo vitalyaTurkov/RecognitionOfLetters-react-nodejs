@@ -1,7 +1,10 @@
 import React from 'react'
-import { RADIUS, WIDTH, HEIGHT } from "./constants";
 import PropTypes from 'prop-types'
+
+import { RADIUS, WIDTH, HEIGHT } from "./constants";
+
 import './main.css'
+import Button from '@material-ui/core/Button'
 
 export default class MyCanvas extends React.Component {
 
@@ -14,8 +17,6 @@ export default class MyCanvas extends React.Component {
         this.isMouseDown = false;
     }
 
-    //Инициализация контекста и закраска канвас белым цветом
-    //Происходит после рендера MyCanvas
     componentDidMount() {
         this.ctx = this.mCanvas.getContext('2d');
         this.clearCanvas();
@@ -25,8 +26,21 @@ export default class MyCanvas extends React.Component {
         return (
             <div className="canvasForm">
                 <div className="btnGroup">
-                    <button onClick={this.onSendClick}>Отправить</button>
-                    <button className="clearBtn" onClick={this.clearCanvas}>Очистить</button>
+                    <Button
+                        variant={"contained"}
+                        color={"primary"}
+                        onClick={this.onSendClick}>
+                        Отправить
+                    </Button>
+                    <div className="btn-wrap">
+                        <Button
+                            variant={"contained"}
+                            color={"secondary"}
+                            className="clearBtn"
+                            onClick={this.clearCanvas}>
+                            Очистить
+                        </Button>
+                    </div>
                 </div>
                 <canvas width={WIDTH}
                         height={HEIGHT}
@@ -44,6 +58,7 @@ export default class MyCanvas extends React.Component {
         this.ctx.fillStyle = 'white';
         this.ctx.fillRect(0, 0, window.innerHeight, window.innerWidth);
         this.ctx.fillStyle = 'black';
+        this.props.changeWord('');
     };
 
     //Обработка события нажатия на кнопку отправки изображения на сервер

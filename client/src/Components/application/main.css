@@ -2,12 +2,6 @@
     margin: 0;
 }
 
-h1 {
-    font-size: 24px;
-    color: #CDE;
-    font-family: 'K2D', sans-serif;
-}
-
 .header {
     margin-top: 10px;
     text-align: center;
@@ -15,6 +9,9 @@ h1 {
     justify-content: center;
 }
 
+.MuiTypography-root-29 {
+    margin-bottom: 10px;
+}
 
 .canvas-wrap {
     padding: 20px;

@@ -1,16 +1,31 @@
 const PNG = require('png-js');
-const data = require('./data');
+const photos = require('./photos');
+
+function findMax(arr) {
+    let max = {
+        count: -999999,
+        word: ""
+    };
+
+    for(let i = 0; i < arr.length; i++) {
+        if(arr[i].count > max.count) {
+            max = arr[i];
+        }
+    }
+    return max
+}
 
 //Сравнение двух файлов попиксельно
 function recognition(file1, file2, callback) {
     let count = 0;
 
     PNG.decode(file1, function (pixelsResult) {
-        PNG.decode(file2, function (pixelsTriangle) {
+        PNG.decode(file2, function (pixelsFile2) {
            for(let i = 0; i < pixelsResult.length; i++) {
-               if(pixelsResult[i] === pixelsTriangle[i] && pixelsResult[i] === 0) {
+               if(pixelsResult[i] === pixelsFile2[i] && pixelsResult[i] === 0) {
                    count++;
                }
+
             }
             callback(count);
         });
@@ -20,58 +35,24 @@ function recognition(file1, file2, callback) {
 //Возвращение картинки, имеющей больше всего совпадений с исходной
 //Сравниваем все картинки с исходной и находим максимальное число совпадений
 function getResultRecognition(lastCallback) {
-    let max = null;
-    let file = 'img/T.png';
-    let word = 'T';
 
-    const promise = new Promise((resolve) => {
-        recognition('img/result.png', 'img/T.png', function (count) { //Подсчет количества совпадений с буквой Т
-            max = count;
-            resolve(max);
-        });
-    });
+    const promises = [];
+    const results = [];
+    for(let i = 0; i < photos.length; i++) {              //Сравниваем нарисованную картинку со всеми картинками
+        promises[i] = new Promise((resolve => {
+            recognition('img/result.png', photos[i].path, function (count) {
+                results[i] = {
+                    word: photos[i].word,
+                    count
+                };
 
-    promise
-        .then(max => {
-            return new Promise(resolve => {
-                recognition('img/result.png', 'img/Б.png', function (count) { //Подсчет количества совпадений с буквой Б
-                    if (max < count) {
-                        max = count;
-                        file = 'img/Б.png';
-                        word = 'Б';
-                    }
-
-                    resolve(max);
-                });
+                resolve();
             });
+        }));
+    }
 
-        })
-        .then(max => {
-            return new Promise(resolve => {
-                recognition('img/result.png', 'img/K.png', function (count) { //Подсчет количества совпадений с буквой К
-                    if (max < count) {
-                        max = count;
-                        file = 'img/K.png';
-                        word = 'K';
-                    }
+    Promise.all(promises).then(() => lastCallback(findMax(results).word));
 
-                    resolve(max);
-                });
-            });
-        })
-        .then(max => {
-            recognition('img/result.png', 'img/H.png', function (count) { //Подсчет количества совпадений с буквой Н
-                if (max < count) {
-                    file = 'img/H.png';
-                    word = 'H';
-                }
-
-                lastCallback({
-                    image : data.read(file),
-                    word: word
-                });
-            });
-        });
 }
 
 module.exports = getResultRecognition;
