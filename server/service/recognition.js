@@ -12,6 +12,13 @@ function findMax(arr) {
             max = arr[i];
         }
     }
+
+    if (max.count === 0) {
+        max = {
+            count: 0,
+            word: "?"
+        }
+    }
     return max
 }
 
