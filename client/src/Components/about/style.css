@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+img {
+    width: 100%;
+}
+
+.textContent {
+    margin: -242px 100px 10px 0;
+    width: 305px;
+}
+
+.cardWrap {
+    padding: 10px;
+}
+
+@media screen and (max-width: 1140px){
+    .container {
+        display: none;
+    }
+}
