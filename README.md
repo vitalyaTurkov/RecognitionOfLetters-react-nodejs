@@ -3,8 +3,8 @@
 Клиентская часть написана с использованием react, redux.
 Серверная часть написана с использованием nodejs, express.
 ## Примеры: 
-![alt-текст](https://vk.com/doc52178553_478739721?hash=513ea32cf62d50ed69&dl=150501dfd837757b27 "Пример 1")
-![alt-текст](https://vk.com/doc52178553_478739722?hash=9988010268d85c53ea&dl=7e0a8409cb74df6cdd "Пример 2")
+![alt-текст](https://pp.userapi.com/c852320/v852320139/2831c/AVTxXxr1wGg.jpg "Пример 1")
+![alt-текст](https://pp.userapi.com/c852320/v852320139/28325/VCCx--AhrVI.jpg "Пример 2")
 ## Запуск:
 1. Клонируйте данный проект
 2. cd RecognitionOfLetters-react-nodejs/server
