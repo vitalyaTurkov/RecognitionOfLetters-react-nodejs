@@ -1,5 +1,5 @@
 const PNG = require('png-js');
-const photos = require('./photos');
+const photos = require('../photos');
 
 function findMax(arr) {
     let max = {
@@ -32,8 +32,11 @@ function recognition(file1, file2, callback) {
                if(pixelsResult[i] === pixelsFile2[i] && pixelsResult[i] === 0) {
                    count++;
                }
-
+               if(pixelsFile2[i] === 0 && pixelsResult[i] !== 0) {
+                   count--;
+               }
             }
+            console.log(file2, count);
             callback(count);
         });
     });

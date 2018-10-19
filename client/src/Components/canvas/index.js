@@ -5,11 +5,14 @@ import { RADIUS, WIDTH, HEIGHT } from "./constants";
 
 import './main.css'
 import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
 
 export default class MyCanvas extends React.Component {
 
     static propTypes = {
-        sendImage: PropTypes.func
+        sendImage: PropTypes.func,
+        newWord: PropTypes.func,
+        changeWord: PropTypes.func
     };
 
     constructor() {
@@ -48,12 +51,29 @@ export default class MyCanvas extends React.Component {
                         onMouseMove={this.mouseMove}
                         onMouseDown={this.mouseDown}
                         onMouseUp={this.mouseUp}
-                        onMouseOut={this.mouseOut}>your browser not supported canvas</canvas>
+                        onMouseOut={this.mouseOut}>your browser not supported canvas
+                </canvas>
+                <div className="form-new-word">
+                    <TextField
+                        inputRef={this.newWordMount}
+                        placeholder={"Буква"}
+                    />
+                    <div className="btn-new-word">
+                        <Button
+                            variant={"contained"}
+                            color={"primary"}
+                            onClick={this.handleNewWord}>
+                            Научить
+                        </Button>
+                    </div>
+                </div>
             </div>
         );
     }
 
-    //Очистка холста канвас
+    newWordMount = input => this.newWordInput = input;
+    setCanvas = canvas => this.mCanvas = canvas;
+
     clearCanvas = () => {
         this.ctx.fillStyle = 'white';
         this.ctx.fillRect(0, 0, window.innerHeight, window.innerWidth);
@@ -61,17 +81,13 @@ export default class MyCanvas extends React.Component {
         this.props.changeWord('');
     };
 
-    //Обработка события нажатия на кнопку отправки изображения на сервер
-    onSendClick = () => {
-        this.props.sendImage(this.mCanvas);
+    onSendClick = () => this.props.sendImage(this.mCanvas);
+
+    handleNewWord = () => {
+        if(this.newWordInput.value !== '' && this.newWordInput.value.length === 1)
+            this.props.newWord(this.mCanvas, this.newWordInput.value);
     };
 
-    //ref, инициализируем канвас в параметры обьекта application
-    setCanvas = (canvas) => {
-        this.mCanvas = canvas;
-    };
-
-    //Событие движения мышки по канвасу
     mouseMove = (e) => {
         if(!this.isMouseDown) {
             return;
@@ -87,18 +103,15 @@ export default class MyCanvas extends React.Component {
         ctx.fill();
     };
 
-    //Событие нажатия на кнопку мыши
     mouseDown = () => {
         this.isMouseDown = true;
     };
 
-    //Событие отпускания кнопки мыши
     mouseUp = () => {
         this.isMouseDown = false;
         this.ctx.beginPath();
     };
 
-    //События выхода за пределы канвас
     mouseOut = () => {
         this.isMouseDown = false;
         this.ctx.beginPath();

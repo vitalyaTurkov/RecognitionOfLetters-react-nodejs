@@ -1,5 +1,5 @@
 import {CHANGE_WORD_ACTION} from './actionTypes'
-import sendImage from "../../service/api/sendImage";
+import { sendImage, sendWord } from "../../service/api/api";
 
 export const changeWord = (word) => {
     return {
@@ -14,3 +14,11 @@ export const changeWordAsync = (canvas) => {
             .then(res => dispatch(changeWord(res.data)))
     }
 };
+
+export const newWordAsync = (canvas, word) => {
+    return dispatch => {
+        sendWord(canvas, word)
+            .then(res => dispatch(changeWord(res.data)))
+    }
+};
+

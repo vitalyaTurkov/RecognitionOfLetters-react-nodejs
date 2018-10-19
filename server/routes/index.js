@@ -6,11 +6,24 @@ function route(router) {
         res.render('index', {title: 'hello'});
     });
 
-//Сохранение картинки, пришедшей в запросе, в файл
-//Затем считываются все картинки и сравниваются с отправленной в запросе
-//В ответ отправляется картинка и буква с большим количеством совпавших пикселей
+    /*Сохранение картинки, пришедшей в запросе, в файл.
+    *Затем считываются все картинки и сравниваются с отправленной в запросе.
+    *В ответ отправляется картинка и буква с большим количеством совпавших пикселей
+    * */
     router.post('/image', (req, res) => {
-        data.save(req.body.image, function () {
+        data.save("./img/result.png", req.body.image, function () {
+            recognition((result) => {
+                res.end(result);
+            });
+        });
+    });
+
+    /*
+    * Добавление нового изображения
+    * */
+    router.post('/new-image', (req, res) => {
+        const path = `./img/${req.body.word}.png`;
+        data.save(path, req.body.image, function () {
             recognition((result) => {
                 res.end(result);
             });
